@@ -48,19 +48,20 @@ export async function POST(req) {
 
     // ✅ Connect to database
     const db = await connectToDb();
-    await db.query(
-      `INSERT INTO schools (name, address, city, state, contact, email_id, image)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [
-        fields.name,
-        fields.address,
-        fields.city,
-        fields.state,
-        fields.contact,
-        fields.email_id,
-        uploadResult.secure_url, // ✅ Cloudinary-hosted URL
-      ]
-    );
+  await db.query(
+  `INSERT INTO schools (name, address, city, state, contact, email_id, image)
+   VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+  [
+    fields.name,
+    fields.address,
+    fields.city,
+    fields.state,
+    fields.contact,
+    fields.email_id,
+    uploadResult.secure_url,
+  ]
+);
+
 
     // ✅ Success response
     return new Response(
